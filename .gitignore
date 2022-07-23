@@ -1,0 +1,6 @@
+*__pycache__*
+*.png
+*.ckpt
+*.pt
+*.pth
+*ipynb*
