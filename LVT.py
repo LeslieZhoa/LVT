@@ -79,7 +79,7 @@ if __name__ == "__main__":
     # align and crop
     info = utils.align_crop_img(img,lmks[0])
     align_face = info['face']
-    cv2.imwrite('algin.png',align_face)
+    cv2.imwrite('align.png',align_face)
 
     # get parsing 
     
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     plt.matshow(parsing)
     plt.colorbar()
-    plt.savefig('paring.png')
+    plt.savefig('parsing.png')
     # get id feature
     id_inp = engine.preprocess_faceid(align_face)
     id_feature = engine.get_id(id_inp)

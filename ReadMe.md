@@ -23,4 +23,18 @@ If not, **just add it!!!**
     bash download_weight.sh
     ```
 3. run<br>
-   follow LVT.py and find details
+   follow LVT.py and find details<br>
+   ```py
+   python LVT.py
+   ```
+### Show 
+- origin image<br>
+![origin image](./images/barack-obama-gty-jt-210802_1627927668233_hpMain_16x9_1600.jpeg)<br>
+- crop image<br>
+![crop image](./images/crop.png)
+- align image<br>
+![align image](./images/align.png)
+- draw landmark<br>
+![lmk image](./images/lmk.png)
+- face parsing<br>
+![parsing image](./images/parsing.png)
