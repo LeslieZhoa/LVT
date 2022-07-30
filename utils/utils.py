@@ -150,6 +150,7 @@ def select_landmark(face_landmarks):
     
     
 def crop_image(image, boxes,s=1.15,size=(256,256)):
+    img_h,img_w,_ = image.shape
     x1, y1, x2, y2 = (boxes[:4] + 0.5).astype(np.int32)
     w = x2 - x1 + 1
     h = y2 - y1 + 1
@@ -163,17 +164,38 @@ def crop_image(image, boxes,s=1.15,size=(256,256)):
     height = scale * 200.0 * s 
 
     top = (center - np.array([height / 2.0, height / 2.0])).astype(np.int32)
+    
     bottom = (center + np.array([height / 2.0, height / 2.0])).astype(np.int32)
 
-    crop_img = image[top[1]:bottom[1],top[0]:bottom[0]]
+    top,bottom,padding = get_padding(top,bottom,img_w,img_h)
+    
+    padding_img = cv2.copyMakeBorder(image,*padding,cv2.BORDER_CONSTANT,value=[0,0,0])
+
+    crop_img = padding_img[top[1]:bottom[1],top[0]:bottom[0]]
     
     if size is not None:
         crop_img = cv2.resize(crop_img,size)
         
+  
+    return crop_img,top-np.array([padding[2],padding[0]]),height
 
+
+def get_padding(top,bottom,w,h):
+    padding = [0,0,0,0]
+    if top[1] < 0:
+        padding[0] = -top[1]
+        top[1] = 0
+    if bottom[1] > h:
+        padding[1] = bottom[1] - h 
     
-    return crop_img,top,height
+    if top[0] < 0:
+        padding[2] = -top[0]
+        top[0] = 0
+    
+    if bottom[0] > w:
+        padding[3] = bottom[0] - w 
 
+    return top,bottom,padding
 
    
 def preprocess(input_image_np,size,mean,std):
